@@ -503,6 +503,7 @@ function route() {
   let r = location.hash.replace('#/', ''); if (!PAGES.includes(r)) r = 'home';
   if (GUARDED.includes(r) && !user) { nextHash = '#/' + r; if (r !== 'home') toast('Please log in to continue'); location.hash = '#/login'; return; }
   if ((r === 'login' || r === 'signup') && user) { location.hash = '#/home'; return; }
+  renderAuth();
   ['home', 'dashboard', 'history', 'auth'].forEach(p => $('page-' + p).hidden = p !== pageOf(r));
   document.querySelectorAll('.links a').forEach(a => a.classList.toggle('on', a.dataset.route === r));
   if (r === 'history') renderHistory(); if (r === 'dashboard') renderKpis(); if (r === 'login' || r === 'signup') setAuthMode(r);
@@ -544,7 +545,10 @@ $('hClear').onclick = () => { if (confirm('Delete all saved history from this br
 // ------------------------------------------------------------------ accounts
 function renderAuth() {
   const a = $('authArea'); a.replaceChildren(); document.querySelector('.links').hidden = !user;
-  if (!user) { const l = mk('a', 'btn ghost', 'Log in'), s = mk('a', 'btn', 'Sign up'); l.href = '#/login'; s.href = '#/signup'; a.append(l, s); return; }
+  if (!user) {   // the button for the page you are on is filled, the other one is outlined
+    const onLogin = location.hash === '#/login', l = mk('a', onLogin ? 'btn' : 'btn ghost', 'Log in'), s = mk('a', onLogin ? 'btn ghost' : 'btn', 'Sign up');
+    l.href = '#/login'; s.href = '#/signup'; (onLogin ? l : s).setAttribute('aria-current', 'page'); a.append(l, s); return;
+  }
   const out = mk('button', 'secondary', 'Log out'); out.onclick = logout; a.append(mk('span', 'avatar', (user.name || '?').trim().charAt(0).toUpperCase()), mk('span', 'uname', user.name), out);
 }
 async function loadMe() { try { user = (await (await fetch('/auth/me')).json()).user; } catch (e) { user = null; } renderAuth(); }
