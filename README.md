@@ -60,8 +60,8 @@ Manually extracting information from documents is time-consuming and error-prone
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/ZahraBatool2024/DocnexaAI.git
+cd DocnexaAI
 ```
 
 ### 2. Install dependencies
