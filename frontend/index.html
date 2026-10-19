@@ -554,7 +554,7 @@ function renderAuth() {
 async function loadMe() { try { user = (await (await fetch('/auth/me')).json()).user; } catch (e) { user = null; } renderAuth(); }
 function resetWorkspace() { docs.forEach(d => d.url && URL.revokeObjectURL(d.url)); docs = []; active = null; history = []; renderAll(); }
 function sessionExpired() { if (!user) return; user = null; resetWorkspace(); renderAuth(); toast('Your session expired. Please log in again.', 'error'); nextHash = '#/home'; location.hash = '#/login'; }
-async function logout() { try { await fetch('/auth/logout', { method: 'POST' }); } catch (e) {} user = null; resetWorkspace(); renderAuth(); location.hash = '#/home'; toast('You have been logged out', 'ok'); }
+async function logout() { try { await fetch('/auth/logout', { method: 'POST' }); } catch (e) {} user = null; resetWorkspace(); renderAuth(); location.hash = '#/home'; route(); toast('You have been logged out', 'ok'); }
 function setAuthMode(r) {
   const su = r === 'signup'; $('aerr').textContent = '';
   $('atitle').textContent = su ? 'Create your account' : 'Welcome back';
