@@ -1,0 +1,3 @@
+# Optional local OCR (heavy). Skip it and set OCR_ENGINE=vision to OCR via Groq instead.
+paddlepaddle
+paddleocr
