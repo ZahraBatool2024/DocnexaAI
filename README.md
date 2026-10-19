@@ -32,7 +32,6 @@ Manually extracting information from documents is time-consuming and error-prone
 <div align="center">
   
 ## Tech Stack
-</div>
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
@@ -43,7 +42,6 @@ Manually extracting information from documents is time-consuming and error-prone
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
 
-<div align="center">
   
 ## AI / API Used
 
@@ -84,4 +82,11 @@ python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 ---
 
+<div align="center">
+  
 *Always verify extracted data before relying on it, and do not upload sensitive documents to a public demo.*
+
+  
+  Developed by **Zahra Batool**
+  
+</div>
