@@ -1,56 +1,63 @@
+<div align="center">
+  
 # Docnexa AI
 
 **Turn invoices, receipts and resumes into clean, verified data. Every value is traced back to your document.**
+</div>
 
 ---
-
+<div align="center">
+  
 ## Problem
+</div>
 
-Businesses, students and job seekers still copy details from invoices, receipts and resumes into spreadsheets by hand. It is slow and easy to get wrong: a mistyped total or a missed date can cause real financial and hiring mistakes.
+Manually extracting information from documents is time-consuming and error-prone. Incorrect totals, missing dates, and inaccurate data can lead to financial and administrative mistakes. Traditional OCR tools can read text but may struggle to organize, validate, and interpret the extracted information.
 
-Many "OCR plus AI" tools make this faster, but they bring a new problem. The AI can invent values that are not in the document, quietly misread numbers, and give you no way to check where a value came from.
-
+<div align="center">
+  
 ## Solution
+</div>
 
-Docnexa AI reads a PDF, Word file or image, extracts the important fields, and then **verifies the result instead of trusting the AI**:
+**DocNexa AI** combines Optical Character Recognition (OCR) with AI-powered information extraction to convert supported documents into structured, verifiable data. Users can review extracted fields, check calculations, ask questions about their documents, and export results in convenient formats.
 
-1. **Reads** the document (direct text extraction, or OCR for scans and photos).
-2. **Extracts** fields and line items with a large language model.
-3. **Verifies** every value: anything that cannot be found in the document is removed, and totals, tax and dates are recalculated and cross-checked.
-4. **Lets you review** each field, see the exact source text, approve or reject it, and export to Excel, JSON or CSV.
-
+<div align="center">
+  
 ## Features
+</div>
 
-- **Only real values:** each extracted value must appear in the document text. Empty, guessed or invented fields are removed automatically.
-- **Automatic checks:** quantity × price, line items against the subtotal, subtotal + tax against the total, and date validity and order. Errors and warnings are flagged.
-- **Trace every value:** click 🔍 on a field to see the exact source text. Hover a value to see its quote.
-- **Review workflow:** edit, approve ✓, reject ✕ or undo any field, and approve all verified fields at once.
-- **Ask your document:** a chat that answers only from the document and quotes the supporting line.
-- **Privacy mask:** hides emails, phone numbers, IDs, account and card numbers from the AI, the extracted text, results, history and exports.
-- **Batch and export:** process many files at once and download one Excel workbook (Documents, Fields, Line items, Checks), or export a single document as Excel, JSON or CSV.
-- **Accounts and history:** sign-up and login, plus a per-user history of processed documents with a dashboard summary.
-- **Supported files:** PDF, Word (`.docx`) and images (PNG, JPG, TIFF, BMP, GIF, WebP). Auto-detect accepts **invoices, receipts and resumes**; other document types are rejected with a clear message.
+- **AI-Powered Document Extraction** — Automatically extracts structured information from invoices, receipts, and resumes using OCR and AI.
+- **Smart Validation & Review** — Detects missing or potentially incorrect values and allows users to review, edit, and approve extracted data.
+- **Document Q&A & Export** — Lets users ask questions about uploaded documents and export extracted results to formats such as Excel, CSV, and JSON.
 
+<div align="center">
+  
 ## Tech Stack
+</div>
 
-| Layer | Technology |
-|---|---|
-| Backend | Python, FastAPI, Uvicorn, Pydantic |
-| Frontend | HTML, CSS and vanilla JavaScript (single-page app, no build step) |
-| Document reading | PyMuPDF (PDF), built-in `.docx` parser, Pillow and NumPy (image preparation), PaddleOCR (optional local OCR) |
-| Exports | openpyxl (Excel), JSON, CSV |
-| Accounts and sessions | SQLite, scrypt password hashing, HttpOnly session cookies |
-| Other | requests, python-dotenv, Docker (optional) |
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-Frontend-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Styling-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-Frontend-F7DF1E?logo=javascript&logoColor=black)
+![PaddleOCR](https://img.shields.io/badge/PaddleOCR-OCR-0062B8)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
 
+<div align="center">
+  
 ## AI / API Used
 
-- **Groq API** (OpenAI-compatible chat completions): the language model that extracts structured fields and answers questions about a document. Default model: `openai/gpt-oss-120b`.
-- **Groq vision model** (`meta-llama/llama-4-scout-17b-16e-instruct`): used only as an OCR fallback for scans and photos when PaddleOCR is not installed.
-- **PaddleOCR** (optional, runs locally): OCR for scanned pages and images.
+</div>
 
-Model names can be changed in `.env`. Check the current list at https://console.groq.com/docs/models.
+- **Groq API (LLM Integration):** Enables AI-powered document information extraction, structured data generation, and document-based question answering.
+- **PaddleOCR (Optical Character Recognition):** Extracts text from scanned PDFs and images to support automated document processing.
+  
+**Groq vision model** used only as an OCR fallback for scans and photos when PaddleOCR is not installed.
 
+<div align="center">
+  
 ## Setup Instructions
+</div>
 
 ### 1. Clone the repository
 
@@ -70,51 +77,11 @@ py -3.11 -m venv .venv
 pip install -r requirements.txt
 ```
 
-**macOS / Linux**
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Optional local OCR (large download, can be hard to install on some Windows machines): `pip install -r requirements-ocr.txt`. Without it, set `OCR_ENGINE=vision` in your `.env` and scans are read with the Groq vision model.
-
-### 3. Add environment variables
-
-Copy the example file and add your own key. **Never commit your real keys:** `.env` is already listed in `.gitignore`, so keep it that way and share only `.env.example`.
-
-```bash
-cp .env.example .env        # Windows: copy .env.example .env
-```
-
-Get a free key at https://console.groq.com/keys, then edit `.env`:
-
-| Variable | Required | Description |
-|---|---|---|
-| `GROQ_API_KEY` | Yes | Your Groq API key |
-| `GROQ_MODEL` | No | Model for extraction and questions (default `openai/gpt-oss-120b`) |
-| `GROQ_FALLBACK_MODELS` | No | Comma-separated backup models |
-| `GROQ_VISION_MODEL` | No | Vision model for the OCR fallback |
-| `OCR_ENGINE` | No | `auto` (default), `paddle` or `vision` |
-| `MAX_FILE_MB` / `MAX_PDF_PAGES` | No | Upload limits (defaults 10 MB / 10 pages) |
-| `RATE_LIMIT_PER_MIN` | No | Requests per minute per IP (default 20) |
-| `DB_PATH` | No | Location of the SQLite accounts database (default: a file in the project's `data/` folder) |
-
-### 4. Run the app
+### 3. Run the app
 
 ```bash
 python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
-
-Open http://127.0.0.1:8000, create an account on the first screen, then use **Dashboard** to upload documents (or click a sample on the Home page).
-
-**Optional, with Docker**
-```bash
-docker build -t docnexa-ai .
-docker run -p 8000:8000 --env-file .env docnexa-ai
-```
-Mount a persistent volume at `data/` if you want accounts to survive redeploys.
-
 ---
 
 *Always verify extracted data before relying on it, and do not upload sensitive documents to a public demo.*
